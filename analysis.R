@@ -129,3 +129,24 @@ ggsave("plots/esch_plot.pdf", esch_plot)
 ggsave("plots/mamer_plot.pdf", mamer_plot)
 ggsave("plots/schengen_plot.pdf", schengen_plot)
 ggsave("plots/wincrange_plot.pdf", wincrange_plot)
+
+# ..............................................................................
+# add cool feature
+make_plot <- function(country_level_data,
+                      commune_level_data,
+                      commune) {
+  filtered_data <- commune_level_data %>%
+    filter(locality == commune)
+  data_to_plot <- bind_rows(
+    country_level_data,
+    filtered_data
+  )
+  ggplot(data_to_plot) +
+    geom_line(aes(y = pl_m2, x = year, group = locality, colour = locality))
+}
+# Luxembourg
+lux_plot <- make_plot(country_level_data, commune_level_data, communes[1])
+lux_plot
+# Esch sur Alzette
+esch_plot <- make_plot(country_level_data, commune_level_data, communes[2])
+esch_plot
