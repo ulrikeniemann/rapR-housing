@@ -1,0 +1,63 @@
+---
+title: "Document title"
+output: html_document
+date: "2023-01-28"
+---
+
+# R code chunks
+
+This below is an R code chunk:
+
+```{r}
+data(mtcars)
+
+plot(mtcars)
+```
+
+
+The code chunk above will appear in the final output. 
+The code chunk below will be hidden:
+
+```{r, echo = FALSE}
+data(iris)
+
+plot(iris)
+```
+
+
+This next code chunk will not be evaluated:
+
+```{r, eval = FALSE}
+data(titanic)
+
+str(titanic)
+```
+
+
+The last one below runs, but code and output from the code is 
+not shown in the final document. This is useful for loading 
+libraries and hiding startup messages:
+
+```{r, include = FALSE}
+library(dplyr)
+```
+
+
+Here is an inline code chunk:
+The iris dataset has `r nrow(iris)` rows.
+
+This sentence has a footnote.^[This is the footnote]
+
+This is an LaTeX equation:
+
+\begin{align*}
+S(\omega) 
+&= \frac{\alpha g^2}{\omega^5} 
+  e^{[ -0.74\bigl\{\frac{\omega U_\omega 19.5}{g}\bigr\}
+   ^{\!-4}\,]} \\
+&= \frac{\alpha g^2}{\omega^5} 
+\exp\Bigl[ -0.74\Bigl\{\frac{\omega U_\omega 19.5}{g}\Bigr\}
+  ^{\!-4}\,\Bigr] 
+  
+  
+\end{align*}
