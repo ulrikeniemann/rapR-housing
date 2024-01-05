@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Flatten a nested maybe value</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for maybe_flatten {maybe}"><tr><td>maybe_flatten {maybe}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Flatten a nested maybe value</h2>
+
+<h3>Description</h3>
+
+<p>Flatten a nested maybe value
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+maybe_flatten(.m)
+
+join(.m)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>.m</code></td>
+<td>
+<p>A maybe value</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A maybe value
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+just(just(1)) %&gt;% maybe_flatten()
+just(nothing()) %&gt;% maybe_flatten()
+just(1) %&gt;% maybe_flatten()
+nothing() %&gt;% maybe_flatten()
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>maybe</em> version 1.1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

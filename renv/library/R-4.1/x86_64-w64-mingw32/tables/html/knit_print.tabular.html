@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Custom printing of 'tabular' objects.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for knit_print.tabular {tables}"><tr><td>knit_print.tabular {tables}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Custom printing of <code>tabular</code> objects.
+</h2>
+
+<h3>Description</h3>
+
+<p>Automatically print <code>tabular</code> objects with formatting when
+in a <span class="pkg">knitr</span> document.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'tabular'
+knit_print(x, format = getKnitrFormat(), ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+
+<p>A <code>tabular</code> object.
+</p>
+</td></tr>
+<tr valign="top"><td><code>format</code></td>
+<td>
+
+<p>Which output format?  <code>"latex"</code> and <code>"html"</code> are supported.
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>Other parameters, currently ignored.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function is not normally called by a user.  It is designed to
+be called by <span class="pkg">knitr</span> while processing a &lsquo;<span class="file">.Rmd</span>&rsquo; or &lsquo;<span class="file">.Rnw</span>&rsquo; document.
+</p>
+<p>If <code>table_options()$knit_print</code> is <code>TRUE</code> and the output
+format is supported, this method will prepare output suitable for
+formatted printing in a <span class="pkg">knitr</span> document using <code><a href="../../knitr/html/asis_output.html">asis_output</a></code>.  Otherwise,
+the usual unformatted print display will be done by <code><a href="../../knitr/html/knit_print.html">normal_print</a></code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object marked for printing in a <span class="pkg">knitr</span> document.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tab &lt;- tabular( (Species + 1) ~ (n=1) + Format(digits=2)*
+         (Sepal.Length + Sepal.Width)*(mean + sd), data=iris )
+knitr::knit_print(tab)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>tables</em> version 0.9.17 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Display all observations in a table.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for AllObs {tables}"><tr><td>AllObs {tables}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Display all observations in a table.
+</h2>
+
+<h3>Description</h3>
+
+<p>These functions generate the code for a <code><a href="../../tables/help/tabular.html">tabular</a></code> table
+to include all observations in a dataset, possibly divided up according
+to other factors.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+AllObs(data = NULL, show = FALSE, label = "Obsn.", within = NULL)
+RowNum(within = NULL, perrow = 5, show = FALSE, label = "Row", data = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data</code></td>
+<td>
+
+<p>The full dataset, used only to find the number of observations.
+</p>
+</td></tr>
+<tr valign="top"><td><code>show</code></td>
+<td>
+
+<p>Whether to show the observation number or row number in the table.
+</p>
+</td></tr>
+<tr valign="top"><td><code>label</code></td>
+<td>
+
+<p>The label to use when <code>show = TRUE</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>within</code></td>
+<td>
+
+<p>A factor or list of factors by which to break up the observations.
+</p>
+</td></tr>
+<tr valign="top"><td><code>perrow</code></td>
+<td>
+
+<p>How many observations per row when <code>RowNum</code> is used in 
+the row specification, or per column when it is part of the
+column specification.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>AllObs</code> is used to display all of the observations in a dataset.
+It generates a (usually undisplayed) factor with a different level for each observation,
+sets a function to display the value, and calls <code><a href="../../tables/help/DropEmpty.html">DropEmpty</a></code>
+to suppress display of empty rows, columns or cells.
+</p>
+<p>If the <code>within</code> argument is specified in <code>AllObs</code>, the 
+factor levels are restarted within each grouping.  (<code>within</code>
+is interpreted as the <code>INDEX</code> argument of <code><a href="../../base/html/tapply.html">tapply</a></code>,
+with one exception described below.)  This may be useful when
+displaying the observation number, and is definitely useful
+if <code>AllObs</code> is used as a column specification in the table.
+It will also save some computation time if the table is very
+large, since fewer factor levels will be generated and 
+later dropped.
+</p>
+<p><code>RowNum</code> is unlikely to be useful in a table by itself,
+but is helpful when displaying large datasets with <code>AllObs</code>.
+It allows a large number of observations to be broken into
+several rows and columns.  
+</p>
+<p>Because <code>RowNum</code> affects both rows and
+columns, its use is somewhat unusual.  Normally it should be called
+before calling <code><a href="../../tables/help/tabular.html">tabular</a></code>, and its result saved in a
+variable.  That variable (e.g. <code>rownum</code>) is used in the
+row specification for the table wrapped in <code><a href="../../base/html/AsIs.html">I</a>()</code>, and
+in the column specification of the table in the <code>within</code>
+argument to <code>AllObs</code>.  (This is the exception mentioned above.)
+</p>
+<p>Despite its name, <code>RowNum</code> can be used as a column specifier,
+if you'd prefer column-major ordering of the values displayed 
+in the table.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Both <code>AllObs</code> and <code>RowNum</code> return language objects
+to be used on <code><a href="../../tables/help/tabular.html">tabular</a></code> formulas.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../tables/help/tabular.html">tabular</a></code>, <code><a href="../../tables/help/DropEmpty.html">DropEmpty</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tabular(Factor(cyl)*Factor(gear)*AllObs(mtcars) ~ 
+               rownames(mtcars) + mpg, data=mtcars)
+    
+rownum &lt;- with(mtcars, RowNum(list(cyl, gear)))
+tabular(Factor(cyl)*Factor(gear)*I(rownum) ~
+        mpg * AllObs(mtcars, within = list(cyl, gear, rownum)), 
+        data=mtcars)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>tables</em> version 0.9.17 <a href="00Index.html">Index</a>]</div>
+</body></html>

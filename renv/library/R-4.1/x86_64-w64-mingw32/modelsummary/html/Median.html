@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: datasummary statistic shortcut</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for Median {modelsummary}"><tr><td>Median {modelsummary}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>datasummary statistic shortcut</h2>
+
+<h3>Description</h3>
+
+<p>datasummary statistic shortcut
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Median(x, fmt = NULL, na.rm = TRUE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>variable to summarize</p>
+</td></tr>
+<tr valign="top"><td><code>fmt</code></td>
+<td>
+<p>passed to the <code>modelsummary:::rounding</code> function</p>
+</td></tr>
+<tr valign="top"><td><code>na.rm</code></td>
+<td>
+<p>a logical value indicating whether ‘NA’ values should be
+stripped before the computation proceeds.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>unused</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("pkgdown"),  "true")) {
+datasummary(mpg + hp ~ Mean + Median + P0 + P25 + P50 + P75 + P100 +
+            Min + Max + SD + Var,
+            data = mtcars)
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>modelsummary</em> version 1.4.3 <a href="00Index.html">Index</a>]</div>
+</body></html>

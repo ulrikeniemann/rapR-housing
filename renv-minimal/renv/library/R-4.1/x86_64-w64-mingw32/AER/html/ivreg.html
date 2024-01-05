@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Instrumental-Variable Regression</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for ivreg {AER}"><tr><td>ivreg {AER}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Instrumental-Variable Regression</h2>
+
+<h3>Description</h3>
+
+<p>Fit instrumental-variable regression by two-stage least squares. This
+is equivalent to direct instrumental-variables estimation when the number of
+instruments is equal to the number of predictors.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+ivreg(formula, instruments, data, subset, na.action, weights, offset,
+  contrasts = NULL, model = TRUE, y = TRUE, x = FALSE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>formula, instruments</code></td>
+<td>
+<p>formula specification(s) of the regression
+relationship and the instruments. Either <code>instruments</code> is missing and
+<code>formula</code> has three parts as in <code>y ~ x1 + x2 | z1 + z2 + z3</code>
+(recommended) or <code>formula</code> is <code>y ~ x1 + x2</code> and <code>instruments</code>
+is a one-sided formula <code>~ z1 + z2 + z3</code> (only for backward compatibility).</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>an optional data frame containing the variables in the model. 
+By default the variables are taken from the environment from which <code>ivreg</code> is
+called.</p>
+</td></tr>
+<tr valign="top"><td><code>subset</code></td>
+<td>
+<p>an optional vector specifying a subset of observations to be used in 
+fitting the model.</p>
+</td></tr>
+<tr valign="top"><td><code>na.action</code></td>
+<td>
+<p>a function that indicates what should happen when the 
+data contain <code>NA</code>s. The default is set by the <code>na.action</code> option.</p>
+</td></tr>
+<tr valign="top"><td><code>weights</code></td>
+<td>
+<p>an optional vector of weights to be used in the fitting process.</p>
+</td></tr>
+<tr valign="top"><td><code>offset</code></td>
+<td>
+<p>an optional offset that can be used to specify an a priori known
+component to be included during fitting.</p>
+</td></tr>       
+<tr valign="top"><td><code>contrasts</code></td>
+<td>
+<p>an optional list. See the <code>contrasts.arg</code> of 
+<code><a href="../../stats/help/model.matrix.html">model.matrix.default</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>model, x, y</code></td>
+<td>
+<p>logicals.  If <code>TRUE</code> the corresponding components of
+the fit (the model frame, the model matrices , the response) are returned.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>further arguments passed to <code><a href="../../AER/help/ivreg.fit.html">ivreg.fit</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>ivreg</code> is the high-level interface to the work-horse function <code><a href="../../AER/help/ivreg.fit.html">ivreg.fit</a></code>,
+a set of standard methods (including <code>print</code>, <code>summary</code>, <code>vcov</code>, <code>anova</code>,
+<code>hatvalues</code>, <code>predict</code>, <code>terms</code>, <code>model.matrix</code>, <code>bread</code>,
+<code>estfun</code>) is available and described on <code><a href="../../AER/help/summary.ivreg.html">summary.ivreg</a></code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>ivreg</code> returns an object of class <code>"ivreg"</code>, with the following components:
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>coefficients</code></td>
+<td>
+<p>parameter estimates.</p>
+</td></tr>
+<tr valign="top"><td><code>residuals</code></td>
+<td>
+<p>a vector of residuals.</p>
+</td></tr>
+<tr valign="top"><td><code>fitted.values</code></td>
+<td>
+<p>a vector of predicted means.</p>
+</td></tr>
+<tr valign="top"><td><code>weights</code></td>
+<td>
+<p>either the vector of weights used (if any) or <code>NULL</code> (if none).</p>
+</td></tr>
+<tr valign="top"><td><code>offset</code></td>
+<td>
+<p>either the offset used (if any) or <code>NULL</code> (if none).</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p>number of observations.</p>
+</td></tr>
+<tr valign="top"><td><code>rank</code></td>
+<td>
+<p>the numeric rank of the fitted linear model.</p>
+</td></tr>
+<tr valign="top"><td><code>df.residual</code></td>
+<td>
+<p>residual degrees of freedom for fitted model.</p>
+</td></tr>
+<tr valign="top"><td><code>cov.unscaled</code></td>
+<td>
+<p>unscaled covariance matrix for the coefficients.</p>
+</td></tr>
+<tr valign="top"><td><code>sigma</code></td>
+<td>
+<p>residual standard error.</p>
+</td></tr>
+<tr valign="top"><td><code>hatvalues</code></td>
+<td>
+<p>regression hat values.</p>
+</td></tr>
+<tr valign="top"><td><code>call</code></td>
+<td>
+<p>the original function call.</p>
+</td></tr>
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p>the model formula.</p>
+</td></tr>
+<tr valign="top"><td><code>terms</code></td>
+<td>
+<p>a list with elements <code>"regressors"</code> and <code>"instruments"</code>
+containing the terms objects for the respective components.</p>
+</td></tr>
+<tr valign="top"><td><code>levels</code></td>
+<td>
+<p>levels of the categorical regressors.</p>
+</td></tr>
+<tr valign="top"><td><code>contrasts</code></td>
+<td>
+<p>the contrasts used for categorical regressors.</p>
+</td></tr>
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>the full model frame (if <code>model = TRUE</code>).</p>
+</td></tr>
+<tr valign="top"><td><code>y</code></td>
+<td>
+<p>the response vector (if <code>y = TRUE</code>).</p>
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>a list with elements <code>"regressors"</code>, <code>"instruments"</code>, <code>"projected"</code>,
+containing the model matrices from the respective components
+(if <code>x = TRUE</code>). <code>"projected"</code> is the matrix of regressors projected
+on the image of the instruments.</p>
+</td></tr>
+</table>
+
+
+<h3>References</h3>
+
+    
+<p>Greene, W. H. (1993)
+<em>Econometric Analysis</em>, 2nd ed., Macmillan.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../AER/help/ivreg.fit.html">ivreg.fit</a></code>, <code><a href="../../stats/help/lm.html">lm</a></code>, <code><a href="../../stats/help/lm.fit.html">lm.fit</a></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## data
+data("CigarettesSW")
+CigarettesSW$rprice &lt;- with(CigarettesSW, price/cpi)
+CigarettesSW$rincome &lt;- with(CigarettesSW, income/population/cpi)
+CigarettesSW$tdiff &lt;- with(CigarettesSW, (taxs - tax)/cpi)
+
+## model 
+fm &lt;- ivreg(log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + I(tax/cpi),
+  data = CigarettesSW, subset = year == "1995")
+summary(fm)
+
+## ANOVA
+fm2 &lt;- ivreg(log(packs) ~ log(rprice) | tdiff, data = CigarettesSW, subset = year == "1995")
+anova(fm, fm2)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>AER</em> version 1.0-0 <a href="00Index.html">Index</a>]</div>
+</body></html>

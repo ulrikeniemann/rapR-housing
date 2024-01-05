@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Include all columns of a dataframe.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for All {tables}"><tr><td>All {tables}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Include all columns of a dataframe.
+</h2>
+
+<h3>Description</h3>
+
+<p>This constructs a formula object for all the columns of a dataframe.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+All(df, numeric=TRUE, character=FALSE, logical=FALSE, factor=FALSE, 
+        complex=FALSE, raw=FALSE, other=FALSE,
+        texify=getOption("tables.texify", FALSE))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>df</code></td>
+<td>
+
+<p>The dataframe in which to find the columns.
+</p>
+</td></tr>
+<tr valign="top"><td><code>numeric, character, logical, factor, complex, raw</code></td>
+<td>
+
+<p>Whether to include columns of specified types.  See the Details below.
+</p>
+</td></tr>
+<tr valign="top"><td><code>other</code></td>
+<td>
+
+<p>Whether to include columns that match none of the previous types.
+</p>
+</td></tr>
+<tr valign="top"><td><code>texify</code></td>
+<td>
+
+<p>Whether to escape LaTeX special characters in column names.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function constructs a formula from the columns of a dataframe.
+By default, only numeric columns are included.  The arguments 
+<code>numeric</code>, <code>character</code>, <code>logical</code>, <code>factor</code>, <code>complex</code>
+and <code>raw</code> control the inclusion of columns of the corresponding types.  
+The argument <code>other</code> controls inclusion of any other columns.
+</p>
+<p>If these arguments are <code>TRUE</code>, such columns will be included in
+the formula.
+</p>
+<p>If a function (or the name of a function given as a character string)
+is passed, such columns will be transformed by the function before
+inclusion.  For example, <code>All(df, factor=as.character)</code> will
+convert all factor columns into their character representation for
+inclusion.
+</p>
+<p>In other cases, the columns will be skipped.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Language to insert into the table formula to achieve the desired table.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Show mean and sd of all numeric columns in the iris data
+tabular( Species  ~ 
+       All(iris)*(mean + sd), data=iris )
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>tables</em> version 0.9.17 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Display a tabular object using LaTeX.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for latex.tabular {tables}"><tr><td>latex.tabular {tables}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Display a tabular object using LaTeX.
+</h2>
+
+<h3>Description</h3>
+
+<p>This is similar to <code><a href="../../tables/help/print.tabular.html">print.tabular</a></code>, but it inserts the code to
+display the table in a LaTeX tabular environment.  The <code>toLatex.tabular</code> method works with the <code><a href="../../tables/help/toLatex.html">toLatex</a></code> generic
+from <span class="pkg">utils</span>.  
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+toLatex(object, ...)
+## S3 method for class 'tabular'
+toLatex(object, file = "", options = NULL, append = FALSE, ...)
+latex.tabular(object, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+
+<p>The tabular object.
+</p>
+</td></tr>
+<tr valign="top"><td><code>file</code></td>
+<td>
+
+<p>A filename or connection to which to write the LaTeX code, or
+<code>""</code> to write to the standard output.
+</p>
+</td></tr>
+<tr valign="top"><td><code>options</code></td>
+<td>
+
+<p>A list of options to set for the duration of the call.
+</p>
+</td></tr>
+<tr valign="top"><td><code>append</code></td>
+<td>
+
+<p>If <code>TRUE</code>, opens <code>file</code> for appending (if it is
+a filename rather than a connection).
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>Settings for default formatting.  See Details below.
+</p>
+</td></tr>  
+</table>
+
+
+<h3>Details</h3>
+
+<p>The <code>toLatex()</code> method produces LaTeX output suitable for inclusion in a <code><a href="../../utils/html/Sweave.html">Sweave</a></code> document. 
+</p>
+<p>The <code>latex.tabular</code> function is set up
+to work as a method for the <code>latex</code> generic in <span class="pkg">Hmisc</span>,
+but is not registered as a method, so that <span class="pkg">tables</span> can
+work when <span class="pkg">Hmisc</span> is not installed.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The <code>toLatex()</code> method returns <code>x</code> invisibly, and prints the LaTeX script to the console.
+</p>
+<p><code>table_options()</code> and <code>booktabs()</code> return the previous settings.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../tables/help/print.tabular.html">print.tabular</a></code>, <code><a href="../../tables/help/table_options.html">table_options</a></code>,
+<code><a href="../../tables/help/toLatex.html">toLatex</a></code>, <code><a href="../../Hmisc/help/latex.html">latex</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tab &lt;- tabular( (Species + 1) ~ (n=1) + Format(digits=2)*
+         (Sepal.Length + Sepal.Width)*(mean + sd), data=iris )
+toLatex(tab)
+save &lt;- booktabs()
+toLatex(tab)
+table_options(save)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>tables</em> version 0.9.17 <a href="00Index.html">Index</a>]</div>
+</body></html>

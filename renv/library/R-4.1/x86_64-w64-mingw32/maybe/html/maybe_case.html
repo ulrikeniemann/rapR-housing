@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Unwrap and call a function on a maybe value or return a...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for maybe_case {maybe}"><tr><td>maybe_case {maybe}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Unwrap and call a function on a maybe value or return a default</h2>
+
+<h3>Description</h3>
+
+<p>Unwrap and call a function on a maybe value or return a default
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+maybe_case(.m, .f, default)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>.m</code></td>
+<td>
+<p>A maybe value</p>
+</td></tr>
+<tr valign="top"><td><code>.f</code></td>
+<td>
+<p>A function to apply to the maybe value in the case of 'Just'</p>
+</td></tr>
+<tr valign="top"><td><code>default</code></td>
+<td>
+<p>A default value to return in the case of 'Nothing'</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>The return value of the 'Just' function or the default value
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+just(1:10) %&gt;% maybe_case(mean, 0)
+nothing() %&gt;% maybe_case(mean, 0)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>maybe</em> version 1.1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: 'Justify' pseudo-function</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for Justify {tables}"><tr><td>Justify {tables}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+<code>Justify</code> pseudo-function
+</h2>
+
+<h3>Description</h3>
+
+<p>The <code>Justify</code> pseudo-function sets the justification
+of the following items in the table.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Justify(labels, data=labels)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>labels</code></td>
+<td>
+
+<p>Justification to use for labels
+</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+
+<p>Justification to use for data.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The justification can be an R name if that is syntactically valid, 
+or a quoted string.
+</p>
+
+
+<h3>Pseudo-functions</h3>
+
+<p>This is a &ldquo;pseudo-function&rdquo;:  it takes the form of a function call, but is
+never actually called:  it is 
+handled specially by <code><a href="../../tables/help/tabular.html">tabular</a></code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tabular( Justify(c,l)*Heading(Var)*(Sepal.Length+Sepal.Width) ~ 
+         Justify(c)*(mean + sd), data=iris )
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>tables</em> version 0.9.17 <a href="00Index.html">Index</a>]</div>
+</body></html>

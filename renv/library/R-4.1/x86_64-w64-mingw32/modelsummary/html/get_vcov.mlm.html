@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Allow users to override uncertainty estimates</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for get_vcov.mlm {modelsummary}"><tr><td>get_vcov.mlm {modelsummary}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Allow users to override uncertainty estimates</h2>
+
+<h3>Description</h3>
+
+<p>Allow users to override uncertainty estimates
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'mlm'
+get_vcov(model, vcov = NULL, conf_level = NULL, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>object type with an available <code>tidy</code> method.</p>
+</td></tr>
+<tr valign="top"><td><code>vcov</code></td>
+<td>
+<p>robust standard errors and other manual statistics. The <code>vcov</code>
+argument accepts six types of input (see the 'Details' and 'Examples'
+sections below):
+</p>
+
+<ul>
+<li><p> NULL returns the default uncertainty estimates of the model object
+</p>
+</li>
+<li><p> string, vector, or (named) list of strings. &quot;iid&quot;, &quot;classical&quot;, and &quot;constant&quot; are aliases for <code>NULL</code>, which returns the model's default uncertainty estimates. The strings &quot;HC&quot;, &quot;HC0&quot;, &quot;HC1&quot; (alias: &quot;stata&quot;), &quot;HC2&quot;, &quot;HC3&quot; (alias: &quot;robust&quot;), &quot;HC4&quot;, &quot;HC4m&quot;, &quot;HC5&quot;, &quot;HAC&quot;, &quot;NeweyWest&quot;, &quot;Andrews&quot;, &quot;panel-corrected&quot;, &quot;outer-product&quot;, and &quot;weave&quot; use variance-covariance matrices computed using functions from the <code>sandwich</code> package, or equivalent method. The behavior of those functions can (and sometimes <em>must</em>) be altered by passing arguments to <code>sandwich</code> directly from <code>modelsummary</code> through the ellipsis (<code>...</code>), but it is safer to define your own custom functions as described in the next bullet.
+</p>
+</li>
+<li><p> function or (named) list of functions which return variance-covariance matrices with row and column names equal to the names of your coefficient estimates (e.g., <code>stats::vcov</code>, <code>sandwich::vcovHC</code>, <code>function(x) vcovPC(x, cluster="country")</code>).
+</p>
+</li>
+<li><p> formula or (named) list of formulas with the cluster variable(s) on the right-hand side (e.g., ~clusterid).
+</p>
+</li>
+<li><p> named list of <code>length(models)</code> variance-covariance matrices with row and column names equal to the names of your coefficient estimates.
+</p>
+</li>
+<li><p> a named list of length(models) vectors with names equal to the names of your coefficient estimates. See 'Examples' section below. Warning: since this list of vectors can include arbitrary strings or numbers, <code>modelsummary</code> cannot automatically calculate p values. The <code>stars</code> argument may thus use incorrect significance thresholds when <code>vcov</code> is a list of vectors.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>all other arguments are passed through to three functions. See the documentation of these functions for lists of available arguments.
+</p>
+
+<ul>
+<li> <p><a href="../../parameters/help/model_parameters.html">parameters::model_parameters</a> extracts parameter estimates. Available arguments depend on model type, but include:
+</p>
+
+<ul>
+<li> <p><code>standardize</code>, <code>centrality</code>, <code>dispersion</code>, <code>test</code>, <code>ci_method</code>, <code>prior</code>, <code>diagnostic</code>, <code>rope_range</code>, <code>power</code>, <code>cluster</code>, etc.
+</p>
+</li></ul>
+
+</li>
+<li> <p><a href="../../performance/help/model_performance.html">performance::model_performance</a> extracts goodness-of-fit statistics. Available arguments depend on model type, but include:
+</p>
+
+<ul>
+<li> <p><code>metrics</code>, <code>estimator</code>, etc.
+</p>
+</li></ul>
+
+</li>
+<li> <p><a href="../../kableExtra/help/kbl.html">kableExtra::kbl</a> or <a href="../../gt/help/gt.html">gt::gt</a> draw tables, depending on the value of the <code>output</code> argument.
+</p>
+</li></ul>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>a numeric vector of test statistics
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>modelsummary</em> version 1.4.3 <a href="00Index.html">Index</a>]</div>
+</body></html>

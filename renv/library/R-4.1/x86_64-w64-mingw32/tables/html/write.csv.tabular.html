@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Write table to file in CSV or other format.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for write.csv.tabular {tables}"><tr><td>write.csv.tabular {tables}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Write table to file in CSV or other format.
+</h2>
+
+<h3>Description</h3>
+
+<p>This writes the formatted table into a CSV or other delimeted
+file, for import into a spreadsheet or other 
+report writer.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+write.csv.tabular(x, file="", 
+    justification = "n", row.names=FALSE, ...)
+write.table.tabular(x, file="", 
+    justification = "n", row.names=FALSE, col.names=FALSE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+
+<p>An object from <code><a href="../../tables/help/tabular.html">tabular</a></code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>file</code></td>
+<td>
+
+<p>A filename or connection to which to write.
+</p>
+</td></tr>
+<tr valign="top"><td><code>justification</code></td>
+<td>
+
+<p>Parameter to pass to <code><a href="../../tables/help/format.tabular.html">format.tabular</a></code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>row.names, col.names</code></td>
+<td>
+
+<p>Parameters to pass to <code><a href="../../utils/html/write.table.html">write.csv</a></code> or <code><a href="../../utils/html/write.table.html">write.table</a></code>
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>Parameters to pass to <code><a href="../../tables/help/format.tabular.html">format.tabular</a></code> or <code><a href="../../utils/html/write.table.html">write.table</a></code>;
+see Details below.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>write.csv.tabular</code> writes a simple version of the table (similar
+to what is produced by <code><a href="../../tables/help/print.tabular.html">print.tabular</a></code>) to the given
+connection in CSV format, using <code><a href="../../utils/html/write.table.html">write.csv</a></code>.
+<code>write.table.tabular</code> does similarly using the more general
+<code><a href="../../utils/html/write.table.html">write.table</a></code>.
+</p>
+<p>The optional arguments in <code>...</code> are sent to <code>write.csv/write.table</code>
+if their names exactly match parameters to <code>write.table</code>; otherwise, they
+are sent to <code>format.tabular</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The return value from <code><a href="../../utils/html/write.table.html">write.csv</a></code> or <code><a href="../../utils/html/write.table.html">write.table</a></code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+# This writes a table to the clipboard on Windows using tab delimiters, for
+# easy import into a spreadsheet.
+
+write.table.tabular( 
+    tabular( (Species + 1) ~ (n=1) + Format(digits=2)*
+         (Sepal.Length + Sepal.Width)*(mean + sd), data=iris ),
+    "clipboard", sep="\t")
+
+## End(Not run)    
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>tables</em> version 0.9.17 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,945 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Model Summary Tables</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for modelsummary {modelsummary}"><tr><td>modelsummary {modelsummary}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Model Summary Tables</h2>
+
+<h3>Description</h3>
+
+<p>Create beautiful and customizable tables to summarize several statistical
+models side-by-side. This function supports dozens of statistical models,
+and it can produce tables in HTML, LaTeX, Word, Markdown, PDF, PowerPoint,
+Excel, RTF, JPG, or PNG. The appearance of the tables can be customized
+extensively by specifying the <code>output</code> argument, and by using functions from
+one of the supported table customization packages: <code>kableExtra</code>, <code>gt</code>,
+<code>flextable</code>, <code>huxtable</code>, <code>DT</code>. For more information, see the Details and Examples
+sections below, and the vignettes on the <code>modelsummary</code> website:
+https://modelsummary.com/
+</p>
+
+<ul>
+<li> <p><a href="https://modelsummary.com/articles/modelsummary.html">The <code>modelsummary</code> Vignette includes dozens of examples of tables with extensive customizations.</a>
+</p>
+</li>
+<li> <p><a href="https://modelsummary.com/articles/appearance.html">The Appearance Vignette shows how to modify the look of tables.</a>
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+modelsummary(
+  models,
+  output = "default",
+  fmt = 3,
+  estimate = "estimate",
+  statistic = "std.error",
+  vcov = NULL,
+  conf_level = 0.95,
+  exponentiate = FALSE,
+  stars = FALSE,
+  shape = term + statistic ~ model,
+  coef_map = NULL,
+  coef_omit = NULL,
+  coef_rename = FALSE,
+  gof_map = NULL,
+  gof_omit = NULL,
+  group_map = NULL,
+  add_columns = NULL,
+  add_rows = NULL,
+  align = NULL,
+  notes = NULL,
+  title = NULL,
+  escape = TRUE,
+  ...
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>models</code></td>
+<td>
+<p>a model, (named) list of models, or nested list of models.
+</p>
+
+<ul>
+<li><p> Single model: <code>modelsummary(model)</code>
+</p>
+</li>
+<li><p> Unnamed list of models: <code>modelsummary(list(model1, model2))</code>
+</p>
+
+<ul>
+<li><p> Models are labelled automatically. The default label style can be altered by setting a global option. See below.
+</p>
+</li></ul>
+
+</li>
+<li><p> Named list of models: <code>modelsummary(list("A"=model1, "B"=model2))</code>
+</p>
+
+<ul>
+<li><p> Models are labelled using the list names.
+</p>
+</li></ul>
+
+</li>
+<li><p> Nested list of models: When using the <code>shape="rbind"</code> argument, <code>models</code> can be a nested list of models to display &quot;panels&quot; or &quot;stacks&quot; of regression models. See the <code>shape</code> argument documentation and examples below.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>output</code></td>
+<td>
+<p>filename or object type (character string)
+</p>
+
+<ul>
+<li><p> Supported filename extensions: .docx, .html, .tex, .md, .txt, .csv, .xlsx, .png, .jpg
+</p>
+</li>
+<li><p> Supported object types: &quot;default&quot;, &quot;html&quot;, &quot;markdown&quot;, &quot;latex&quot;, &quot;latex_tabular&quot;, &quot;data.frame&quot;, &quot;gt&quot;, &quot;kableExtra&quot;, &quot;huxtable&quot;, &quot;flextable&quot;, &quot;DT&quot;, &quot;jupyter&quot;. The &quot;modelsummary_list&quot; value produces a lightweight object which can be saved and fed back to the <code>modelsummary</code> function.
+</p>
+</li>
+<li><p> The &quot;default&quot; output format can be set to &quot;kableExtra&quot;, &quot;gt&quot;, &quot;flextable&quot;, &quot;huxtable&quot;, &quot;DT&quot;, or &quot;markdown&quot;
+</p>
+
+<ul>
+<li><p> If the user does not choose a default value, the packages listed above are tried in sequence.
+</p>
+</li>
+<li><p> Session-specific configuration: <code>options("modelsummary_factory_default" = "gt")</code>
+</p>
+</li>
+<li><p> Persistent configuration: <code>config_modelsummary(output = "markdown")</code>
+</p>
+</li></ul>
+
+</li>
+<li><p> Warning: Users should not supply a file name to the <code>output</code> argument if they intend to customize the table with external packages. See the 'Details' section.
+</p>
+</li>
+<li><p> LaTeX compilation requires the <code>booktabs</code> and <code>siunitx</code> packages, but <code>siunitx</code> can be disabled or replaced with global options. See the 'Details' section.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>fmt</code></td>
+<td>
+<p>how to format numeric values: integer, user-supplied function, or <code>modelsummary</code> function.
+</p>
+
+<ul>
+<li><p> Integer: Number of decimal digits
+</p>
+</li>
+<li><p> User-supplied functions:
+</p>
+
+<ul>
+<li><p> Any function which accepts a numeric vector and returns a character vector of the same length.
+</p>
+</li></ul>
+
+</li>
+<li> <p><code>modelsummary</code> functions:
+</p>
+
+<ul>
+<li> <p><code>fmt = fmt_significant(2)</code>: Two significant digits (at the term-level)
+</p>
+</li>
+<li> <p><code>fmt = fmt_decimal(digits = 2, pdigits = 3)</code>: Decimal digits for estimate and p values
+</p>
+</li>
+<li> <p><code>fmt = fmt_sprintf("%.3f")</code>: See <code>?sprintf</code>
+</p>
+</li>
+<li> <p><code>fmt = fmt_term("(Intercept)" = 1, "X" = 2)</code>: Format terms differently
+</p>
+</li>
+<li> <p><code>fmt = fmt_statistic("estimate" = 1, "r.sqared" = 6)</code>: Format statistics differently.
+</p>
+</li>
+<li> <p><code>fmt = fmt_identity()</code>: unformatted raw values
+</p>
+</li></ul>
+
+</li>
+<li><p> string:
+</p>
+</li>
+<li><p> Note on LaTeX output: To ensure proper typography, all numeric entries are enclosed in the <code style="white-space: pre;">\num{}</code> command, which requires the <code>siunitx</code> package to be loaded in the LaTeX preamble. This behavior can be altered with global options. See the 'Details' section.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>estimate</code></td>
+<td>
+<p>a single string or a character vector of length equal to the
+number of models. Valid entries include any column name of
+the data.frame produced by <code>get_estimates(model)</code>, and strings with curly braces compatible with the <code>glue</code> package format. Examples:
+</p>
+
+<ul>
+<li> <p><code>"estimate"</code>
+</p>
+</li>
+<li> <p><code>"{estimate} ({std.error}){stars}"</code>
+</p>
+</li>
+<li> <p><code>"{estimate} [{conf.low}, {conf.high}]"</code>
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>statistic</code></td>
+<td>
+<p>vector of strings or <code>glue</code> strings which select uncertainty
+statistics to report vertically below the estimate. NULL omits all
+uncertainty statistics.
+</p>
+
+<ul>
+<li><p> &quot;conf.int&quot;, &quot;std.error&quot;, &quot;statistic&quot;, &quot;p.value&quot;, &quot;conf.low&quot;, &quot;conf.high&quot;, .
+or any column name produced by <code>get_estimates(model)</code>
+</p>
+</li>
+<li> <p><code>glue</code> package strings with braces, with or without R functions, such as:
+</p>
+
+<ul>
+<li> <p><code>"{p.value} [{conf.low}, {conf.high}]"</code>
+</p>
+</li>
+<li> <p><code>"Std.Error: {std.error}"</code>
+</p>
+</li>
+<li> <p><code>"{exp(estimate) * std.error}"</code>
+</p>
+</li></ul>
+
+</li>
+<li><p> Numbers are automatically rounded and converted to strings. To apply functions to their numeric values, as in the last <code>glue</code> example, users must set <code>fmt=NULL</code>.
+</p>
+</li>
+<li><p> Parentheses are added automatically unless the string includes <code>glue</code> curly braces <code>{}</code>.
+</p>
+</li>
+<li><p> Some statistics are not supported for all models. See column names in <code>get_estimates(model)</code>, and visit the website to learn how to add custom statistics.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>vcov</code></td>
+<td>
+<p>robust standard errors and other manual statistics. The <code>vcov</code>
+argument accepts six types of input (see the 'Details' and 'Examples'
+sections below):
+</p>
+
+<ul>
+<li><p> NULL returns the default uncertainty estimates of the model object
+</p>
+</li>
+<li><p> string, vector, or (named) list of strings. &quot;iid&quot;, &quot;classical&quot;, and &quot;constant&quot; are aliases for <code>NULL</code>, which returns the model's default uncertainty estimates. The strings &quot;HC&quot;, &quot;HC0&quot;, &quot;HC1&quot; (alias: &quot;stata&quot;), &quot;HC2&quot;, &quot;HC3&quot; (alias: &quot;robust&quot;), &quot;HC4&quot;, &quot;HC4m&quot;, &quot;HC5&quot;, &quot;HAC&quot;, &quot;NeweyWest&quot;, &quot;Andrews&quot;, &quot;panel-corrected&quot;, &quot;outer-product&quot;, and &quot;weave&quot; use variance-covariance matrices computed using functions from the <code>sandwich</code> package, or equivalent method. The behavior of those functions can (and sometimes <em>must</em>) be altered by passing arguments to <code>sandwich</code> directly from <code>modelsummary</code> through the ellipsis (<code>...</code>), but it is safer to define your own custom functions as described in the next bullet.
+</p>
+</li>
+<li><p> function or (named) list of functions which return variance-covariance matrices with row and column names equal to the names of your coefficient estimates (e.g., <code>stats::vcov</code>, <code>sandwich::vcovHC</code>, <code>function(x) vcovPC(x, cluster="country")</code>).
+</p>
+</li>
+<li><p> formula or (named) list of formulas with the cluster variable(s) on the right-hand side (e.g., ~clusterid).
+</p>
+</li>
+<li><p> named list of <code>length(models)</code> variance-covariance matrices with row and column names equal to the names of your coefficient estimates.
+</p>
+</li>
+<li><p> a named list of length(models) vectors with names equal to the names of your coefficient estimates. See 'Examples' section below. Warning: since this list of vectors can include arbitrary strings or numbers, <code>modelsummary</code> cannot automatically calculate p values. The <code>stars</code> argument may thus use incorrect significance thresholds when <code>vcov</code> is a list of vectors.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>conf_level</code></td>
+<td>
+<p>numeric value between 0 and 1. confidence level to use for
+confidence intervals. Setting this argument to <code>NULL</code> does not extract
+confidence intervals, which can be faster for some models.</p>
+</td></tr>
+<tr valign="top"><td><code>exponentiate</code></td>
+<td>
+<p>TRUE, FALSE, or logical vector of length equal to the
+number of models. If TRUE, the <code>estimate</code>, <code>conf.low</code>, and <code>conf.high</code>
+statistics are exponentiated, and the <code>std.error</code> is transformed to
+<code>exp(estimate)*std.error</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>stars</code></td>
+<td>
+<p>to indicate statistical significance
+</p>
+
+<ul>
+<li><p> FALSE (default): no significance stars.
+</p>
+</li>
+<li><p> TRUE: +=.1, *=.05, **=.01, ***=0.001
+</p>
+</li>
+<li><p> Named numeric vector for custom stars such as <code>c('*' = .1, '+' = .05)</code>
+</p>
+</li>
+<li><p> Note: a legend will not be inserted at the bottom of the table when the <code>estimate</code> or <code>statistic</code> arguments use &quot;glue strings&quot; with <code>{stars}</code>.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>shape</code></td>
+<td>
+<p><code>NULL</code>, formula, or string which determines the shape of a table.
+</p>
+
+<ul>
+<li> <p><code>NULL</code>: Default shape with terms in rows and models in columns.
+</p>
+</li>
+<li><p> Formula: The left side determines what appears on rows, and the right side determines what appears on columns. The formula can include one or more group identifier(s) to display related terms together, which can be useful for models with multivariate outcomes or grouped coefficients (See examples section below). The group identifier(s) must be column names produced by: <code>get_estimates(model)</code>. The group identifier(s) can be combined with the term identifier in a single column by using the colon to represent an interaction. If an incomplete formula is supplied (e.g., <code>~statistic</code>), <code>modelsummary</code> tries to complete it automatically. Goodness-of-fit statistics are only appended to the bottom of the table when <code>model</code> is on the right hand side of the formula (i.e., columns). Potential <code>shape</code> values include:
+</p>
+
+<ul>
+<li> <p><code>term + statistic ~ model</code>: default
+</p>
+</li>
+<li> <p><code>term ~ model + statistic</code>: statistics in separate columns
+</p>
+</li>
+<li> <p><code>model + statistic ~ term</code>: models in rows and terms in columns
+</p>
+</li>
+<li> <p><code>term + response + statistic ~ model</code>: term and group id in separate columns
+</p>
+</li>
+<li> <p><code>term : response + statistic ~ model</code>: term and group id in a single column
+</p>
+</li>
+<li> <p><code>term ~ response</code>
+</p>
+</li></ul>
+
+</li>
+<li><p> String: &quot;rbind&quot; or &quot;rcollapse&quot; to bind rows of two or more regression tables to create &quot;panels&quot; or &quot;stacks&quot; of regression models.
+</p>
+
+<ul>
+<li><p> the <code>models</code> argument must be a (potentially named) nested list of models.
+</p>
+</li></ul>
+
+
+<ul>
+<li><p> Unnamed nested list with 2 panels: <code>list(list(model1, model2), list(model3, model4))</code>
+</p>
+</li>
+<li><p> Named nested list with 2 panels: <code>list("Panel A" = list(model1, model2), "Panel B" = list(model3, model4))</code>
+</p>
+</li>
+<li><p> Named panels and named models: <code>list("Panel A" = list("(I)" = model1, "(II)" = model2), "Panel B" = list("(I)" = model3, "(II)" = model4))</code>
+</p>
+</li></ul>
+
+
+<ul>
+<li><p> &quot;rbind&quot;: Bind the rows of independent regression tables
+</p>
+</li>
+<li><p> &quot;rcollapse&quot;: Bind the rows of regression tables and create a panel at the bottom where we &quot;collapse&quot; goodness-of-fit statistics which are identical across models.
+</p>
+</li></ul>
+
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>coef_map</code></td>
+<td>
+<p>character vector. Subset, rename, and reorder coefficients.
+Coefficients omitted from this vector are omitted from the table. The order
+of the vector determines the order of the table. <code>coef_map</code> can be a named
+or an unnamed character vector. If <code>coef_map</code> is a named vector, its values
+define the labels that must appear in the table, and its names identify the
+original term names stored in the model object: <code>c("hp:mpg"="HPxM/G")</code>. See
+Examples section below.</p>
+</td></tr>
+<tr valign="top"><td><code>coef_omit</code></td>
+<td>
+<p>integer vector or regular expression to identify which coefficients to omit (or keep) from the table. Positive integers determine which coefficients to omit. Negative integers determine which coefficients to keep. A regular expression can be used to omit coefficients, and perl-compatible &quot;negative lookaheads&quot; can be used to specify which coefficients to <em>keep</em> in the table. Examples:
+</p>
+
+<ul>
+<li><p> c(2, 3, 5): omits the second, third, and fifth coefficients.
+</p>
+</li>
+<li><p> c(-2, -3, -5): negative values keep the second, third, and fifth coefficients.
+</p>
+</li>
+<li> <p><code>"ei"</code>: omit coefficients matching the &quot;ei&quot; substring.
+</p>
+</li>
+<li> <p><code>"^Volume$"</code>: omit the &quot;Volume&quot; coefficient.
+</p>
+</li>
+<li> <p><code>"ei|rc"</code>: omit coefficients matching either the &quot;ei&quot; or the &quot;rc&quot; substrings.
+</p>
+</li>
+<li> <p><code>"^(?!Vol)"</code>: keep coefficients starting with &quot;Vol&quot; (inverse match using a negative lookahead).
+</p>
+</li>
+<li> <p><code>"^(?!.*ei)"</code>: keep coefficients matching the &quot;ei&quot; substring.
+</p>
+</li>
+<li> <p><code>"^(?!.*ei|.*pt)"</code>: keep coefficients matching either the &quot;ei&quot; or the &quot;pt&quot; substrings.
+</p>
+</li>
+<li><p> See the Examples section below for complete code.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>coef_rename</code></td>
+<td>
+<p>logical, named or unnamed character vector, or function
+</p>
+
+<ul>
+<li><p> Logical: TRUE renames variables based on the &quot;label&quot; attribute of each column. See the Example section below.
+</p>
+</li>
+<li><p> Unnamed character vector of length equal to the number of coefficients in the final table, after <code>coef_omit</code> is applied.
+</p>
+</li>
+<li><p> Named character vector: Values refer to the variable names that will appear in the table. Names refer to the original term names stored in the model object. Ex: c(&quot;hp:mpg&quot;=&quot;hp X mpg&quot;)
+</p>
+</li>
+<li><p> Function: Accepts a character vector of the model's term names and returns a named vector like the one described above. The <code>modelsummary</code> package supplies a <code>coef_rename()</code> function which can do common cleaning tasks: <code>modelsummary(model, coef_rename = coef_rename)</code>
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>gof_map</code></td>
+<td>
+<p>rename, reorder, and omit goodness-of-fit statistics and other
+model information. This argument accepts 4 types of values:
+</p>
+
+<ul>
+<li><p> NULL (default): the <code>modelsummary::gof_map</code> dictionary is used for formatting, and all unknown statistic are included.
+</p>
+</li>
+<li><p> character vector: &quot;all&quot;, &quot;none&quot;, or a vector of statistics such as <code>c("rmse", "nobs", "r.squared")</code>. Elements correspond to colnames in the data.frame produced by <code>get_gof(model)</code>. The <code>modelsummary::gof_map</code> default dictionary is used to format and rename statistics.
+</p>
+</li>
+<li><p> NA: excludes all statistics from the bottom part of the table.
+</p>
+</li>
+<li><p> data.frame with 3 columns named &quot;raw&quot;, &quot;clean&quot;, &quot;fmt&quot;. Unknown statistics are omitted. See the 'Examples' section below.
+</p>
+</li>
+<li><p> list of lists, each of which includes 3 elements named &quot;raw&quot;, &quot;clean&quot;, &quot;fmt&quot;. Unknown statistics are omitted. See the 'Examples section below'.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>gof_omit</code></td>
+<td>
+<p>string regular expression (perl-compatible) used to determine which statistics to omit from the bottom section of the table. A &quot;negative lookahead&quot; can be used to specify which statistics to <em>keep</em> in the table. Examples:
+</p>
+
+<ul>
+<li> <p><code>"IC"</code>: omit statistics matching the &quot;IC&quot; substring.
+</p>
+</li>
+<li> <p><code>"BIC|AIC"</code>: omit statistics matching the &quot;AIC&quot; or &quot;BIC&quot; substrings.
+</p>
+</li>
+<li> <p><code>"^(?!.*IC)"</code>: keep statistics matching the &quot;IC&quot; substring.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>group_map</code></td>
+<td>
+<p>named or unnamed character vector. Subset, rename, and
+reorder coefficient groups specified a grouping variable specified in the
+<code>shape</code> argument formula. This argument behaves like <code>coef_map</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>add_columns</code></td>
+<td>
+<p>a data.frame (or tibble) with the same number of rows as
+#' your main table. By default, rows are appended to the bottom of the table.
+You can define a &quot;position&quot; attribute of integers to set the columns positions.
+See Examples section below.</p>
+</td></tr>
+<tr valign="top"><td><code>add_rows</code></td>
+<td>
+<p>a data.frame (or tibble) with the same number of columns as
+your main table. By default, rows are appended to the bottom of the table.
+You can define a &quot;position&quot; attribute of integers to set the row positions.
+See Examples section below.</p>
+</td></tr>
+<tr valign="top"><td><code>align</code></td>
+<td>
+<p>A string with a number of characters equal to the number of columns in
+the table (e.g., <code>align = "lcc"</code>).  Valid characters: l, c, r, d.
+</p>
+
+<ul>
+<li><p> &quot;l&quot;: left-aligned column
+</p>
+</li>
+<li><p> &quot;c&quot;: centered column
+</p>
+</li>
+<li><p> &quot;r&quot;: right-aligned column
+</p>
+</li>
+<li><p> &quot;d&quot;: dot-aligned column. For LaTeX/PDF output, this option requires at least version 3.0.25 of the siunitx LaTeX package. These commands must appear in the LaTeX preamble (they are added automatically when compiling Rmarkdown documents to PDF):
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">\usepackage{booktabs}</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">\usepackage{siunitx}</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">\newcolumntype{d}{S[ input-open-uncertainty=, input-close-uncertainty=, parse-numbers = false, table-align-text-pre=false, table-align-text-post=false ]}</code>
+</p>
+</li></ul>
+
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>notes</code></td>
+<td>
+<p>list or vector of notes to append to the bottom of the table.</p>
+</td></tr>
+<tr valign="top"><td><code>title</code></td>
+<td>
+<p>string</p>
+</td></tr>
+<tr valign="top"><td><code>escape</code></td>
+<td>
+<p>boolean TRUE escapes or substitutes LaTeX/HTML characters which could
+prevent the file from compiling/displaying. This setting does not affect captions or notes.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>all other arguments are passed through to three functions. See the documentation of these functions for lists of available arguments.
+</p>
+
+<ul>
+<li> <p><a href="../../parameters/help/model_parameters.html">parameters::model_parameters</a> extracts parameter estimates. Available arguments depend on model type, but include:
+</p>
+
+<ul>
+<li> <p><code>standardize</code>, <code>centrality</code>, <code>dispersion</code>, <code>test</code>, <code>ci_method</code>, <code>prior</code>, <code>diagnostic</code>, <code>rope_range</code>, <code>power</code>, <code>cluster</code>, etc.
+</p>
+</li></ul>
+
+</li>
+<li> <p><a href="../../performance/help/model_performance.html">performance::model_performance</a> extracts goodness-of-fit statistics. Available arguments depend on model type, but include:
+</p>
+
+<ul>
+<li> <p><code>metrics</code>, <code>estimator</code>, etc.
+</p>
+</li></ul>
+
+</li>
+<li> <p><a href="../../kableExtra/help/kbl.html">kableExtra::kbl</a> or <a href="../../gt/help/gt.html">gt::gt</a> draw tables, depending on the value of the <code>output</code> argument.
+</p>
+</li></ul>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+
+
+<h4><code>output</code></h4>
+
+<p>The <code>modelsummary_list</code> output is a lightweight format which can be used to save model results, so they can be fed back to <code>modelsummary</code> later to avoid extracting results again.
+</p>
+<p>When a file name with a valid extension is supplied to the <code>output</code> argument,
+the table is written immediately to file. If you want to customize your table
+by post-processing it with an external package, you need to choose a
+different output format and saving mechanism. Unfortunately, the approach
+differs from package to package:
+</p>
+
+<ul>
+<li> <p><code>gt</code>: set <code>output="gt"</code>, post-process your table, and use the <code>gt::gtsave</code> function.
+</p>
+</li>
+<li> <p><code>kableExtra</code>: set <code>output</code> to your destination format (e.g., &quot;latex&quot;, &quot;html&quot;, &quot;markdown&quot;), post-process your table, and use <code>kableExtra::save_kable</code> function.
+</p>
+</li></ul>
+
+
+
+
+<h4><code>vcov</code></h4>
+
+<p>To use a string such as &quot;robust&quot; or &quot;HC0&quot;, your model must be supported
+by the <code>sandwich</code> package. This includes objects such as: lm, glm,
+survreg, coxph, mlogit, polr, hurdle, zeroinfl, and more.
+</p>
+<p>NULL, &quot;classical&quot;, &quot;iid&quot;, and &quot;constant&quot; are aliases which do not modify
+uncertainty estimates and simply report the default standard errors stored
+in the model object.
+</p>
+<p>One-sided formulas such as <code>~clusterid</code> are passed to the <code>sandwich::vcovCL</code>
+function.
+</p>
+<p>Matrices and functions producing variance-covariance matrices are first
+passed to <code>lmtest</code>. If this does not work, <code>modelsummary</code> attempts to take
+the square root of the diagonal to adjust &quot;std.error&quot;, but the other
+uncertainty estimates are not be adjusted.
+</p>
+<p>Numeric vectors are formatted according to <code>fmt</code> and placed in brackets.
+Character vectors printed as given, without parentheses.
+</p>
+<p>If your model type is supported by the <code>lmtest</code> package, the
+<code>vcov</code> argument will try to use that package to adjust all the
+uncertainty estimates, including &quot;std.error&quot;, &quot;statistic&quot;, &quot;p.value&quot;, and
+&quot;conf.int&quot;. If your model is not supported by <code>lmtest</code>, only the &quot;std.error&quot;
+will be adjusted by, for example, taking the square root of the matrix's
+diagonal.
+</p>
+
+
+
+<h3>Value</h3>
+
+<p>a regression table in a format determined by the <code>output</code> argument.
+</p>
+
+
+<h3>Global Options</h3>
+
+<p>The behavior of <code>modelsummary</code> can be modified by setting global options. For example:
+</p>
+
+<ul>
+<li> <p><code>options(modelsummary_model_labels = "roman")</code>
+</p>
+</li></ul>
+
+<p>The rest of this section describes each of the options above.
+</p>
+
+
+<h4>Model labels: default column names</h4>
+
+<p>These global option changes the style of the default column headers:
+</p>
+
+<ul>
+<li> <p><code>options(modelsummary_model_labels = "roman")</code>
+</p>
+</li>
+<li> <p><code>options(modelsummary_panel_labels = "roman")</code>
+</p>
+</li></ul>
+
+<p>The supported styles are: &quot;model&quot;, &quot;panel&quot;, &quot;arabic&quot;, &quot;letters&quot;, &quot;roman&quot;, &quot;(arabic)&quot;, &quot;(letters)&quot;, &quot;(roman)&quot;&quot;
+</p>
+<p>The panel-specific option is only used when <code>shape="rbind"</code>
+</p>
+
+
+
+<h4>Table-making packages</h4>
+
+<p><code>modelsummary</code> supports 4 table-making packages: <code>kableExtra</code>, <code>gt</code>,
+<code>flextable</code>, <code>huxtable</code>, and <code>DT</code>. Some of these packages have overlapping
+functionalities. For example, 3 of those packages can export to LaTeX. To
+change the default backend used for a specific file format, you can use
+the <code>options</code> function:
+</p>
+<p><code>options(modelsummary_factory_html = 'kableExtra')</code>
+</p>
+<p><code>options(modelsummary_factory_latex = 'gt')</code>
+</p>
+<p><code>options(modelsummary_factory_word = 'huxtable')</code>
+</p>
+<p><code>options(modelsummary_factory_png = 'gt')</code>
+</p>
+
+
+
+<h4>Table themes</h4>
+
+<p>Change the look of tables in an automated and replicable way, using the <code>modelsummary</code> theming functionality. See the vignette: https://modelsummary.com/articles/appearance.html
+</p>
+
+<ul>
+<li> <p><code>modelsummary_theme_gt</code>
+</p>
+</li>
+<li> <p><code>modelsummary_theme_kableExtra</code>
+</p>
+</li>
+<li> <p><code>modelsummary_theme_huxtable</code>
+</p>
+</li>
+<li> <p><code>modelsummary_theme_flextable</code>
+</p>
+</li>
+<li> <p><code>modelsummary_theme_dataframe</code>
+</p>
+</li></ul>
+
+
+
+
+<h4>Model extraction functions</h4>
+
+<p><code>modelsummary</code> can use two sets of packages to extract information from
+statistical models: the <code>easystats</code> family (<code>performance</code> and <code>parameters</code>)
+and <code>broom</code>. By default, it uses <code>easystats</code> first and then falls back on
+<code>broom</code> in case of failure. You can change the order of priorities or include
+goodness-of-fit extracted by <em>both</em> packages by setting:
+</p>
+<p><code>options(modelsummary_get = "broom")</code>
+</p>
+<p><code>options(modelsummary_get = "easystats")</code>
+</p>
+<p><code>options(modelsummary_get = "all")</code>
+</p>
+
+
+
+<h4>Formatting numeric entries</h4>
+
+<p>By default, LaTeX tables enclose all numeric entries in the <code style="white-space: pre;">\num{}</code> command
+from the siunitx package. To prevent this behavior, or to enclose numbers
+in dollar signs (for LaTeX math mode), users can call:
+</p>
+<p><code>options(modelsummary_format_numeric_latex = "plain")</code>
+</p>
+<p><code>options(modelsummary_format_numeric_latex = "mathmode")</code>
+</p>
+<p>A similar option can be used to display numerical entries using MathJax in
+HTML tables:
+</p>
+<p><code>options(modelsummary_format_numeric_html = "mathjax")</code>
+</p>
+
+
+
+<h3>Parallel computation</h3>
+
+<p>It can take a long time to compute and extract summary statistics from
+certain models (e.g., Bayesian). In those cases, users can parallelize the
+process. Since parallelization occurs at the model level, no speedup is
+available for tables with a single model. Users on mac or linux can launch
+parallel computation using the built-in <code>parallel</code> package. All they need to
+do is supply a <code>mc.cores</code> argument which will be pushed forward to the
+<code>parallel::mclapply</code> function:
+</p>
+<div class="sourceCode r"><pre>modelsummary(model_list, mc.cores = 5)
+</pre></div>
+<p>All users can also use the <code>future.apply</code> package to parallelize model summaries.
+For example, to use 4 cores to extract results:
+</p>
+<div class="sourceCode r"><pre>library(future.apply)
+plan(multicore, workers = 4)
+options("modelsummary_future" = TRUE)
+modelsummary(model_list)
+</pre></div>
+<p>Note that the &quot;multicore&quot; plan only parallelizes under mac or linux. Windows
+users can use <code>plan(multisession)</code> instead. However, note that the first
+time <code>modelsummary()</code> is called under multisession can be a fair bit longer,
+because of extra costs in passing data to and loading required packages on
+to workers. Subsequent calls to <code>modelsummary()</code> will often be much faster.
+</p>
+<p>Some users have reported difficult to reproduce errors when using the
+<code>future</code> package with some packages. The <code>future</code> parallelization in
+<code>modelsummary</code> can be disabled by calling:
+</p>
+<p><code>options("modelsummary_future" = FALSE)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>
+library(modelsummary)
+
+# load data and estimate models
+utils::data(trees)
+models &lt;- list()
+models[['Bivariate']] &lt;- lm(Girth ~ Height, data = trees)
+models[['Multivariate']] &lt;- lm(Girth ~ Height + Volume, data = trees)
+
+# simple table
+modelsummary(models)
+
+# statistic
+modelsummary(models, statistic = NULL)
+
+modelsummary(models, statistic = 'p.value')
+
+modelsummary(models, statistic = 'statistic')
+
+modelsummary(models, statistic = 'conf.int', conf_level = 0.99)
+
+modelsummary(models, statistic = c("t = {statistic}",
+                                   "se = {std.error}",
+                                   "conf.int"))
+
+# estimate
+modelsummary(models,
+  statistic = NULL,
+  estimate = "{estimate} [{conf.low}, {conf.high}]")
+
+modelsummary(models,
+  estimate = c("{estimate}{stars}",
+               "{estimate} ({std.error})"))
+
+# vcov
+modelsummary(models, vcov = "robust")
+
+modelsummary(models, vcov = list("classical", "stata"))
+
+modelsummary(models, vcov = sandwich::vcovHC)
+
+modelsummary(models,
+  vcov = list(stats::vcov, sandwich::vcovHC))
+
+modelsummary(models,
+  vcov = list(c("(Intercept)"="", "Height"="!"),
+              c("(Intercept)"="", "Height"="!", "Volume"="!!")))
+
+# vcov with custom names
+modelsummary(
+  models,
+  vcov = list("Stata Corp" = "stata",
+              "Newey Lewis &amp; the News" = "NeweyWest"))
+
+# fmt
+mod &lt;- lm(mpg ~ hp + drat + qsec, data = mtcars)
+
+modelsummary(mod, fmt = 3)
+
+modelsummary(mod, fmt = fmt_significant(3))
+
+modelsummary(mod, fmt = NULL)
+
+modelsummary(mod, fmt = fmt_decimal(4))
+
+modelsummary(mod, fmt = fmt_sprintf("%.5f"))
+
+modelsummary(mod, fmt = fmt_statistic(estimate = 4, conf.int = 1), statistic = "conf.int")
+
+modelsummary(mod, fmt = fmt_term(hp = 4, drat = 1, default = 2))
+
+m &lt;- lm(mpg ~ I(hp * 1000) + drat, data = mtcars)
+f &lt;- function(x) format(x, digits = 3, nsmall = 2, scientific = FALSE, trim = TRUE)
+modelsummary(m, fmt = f, gof_map = NA)
+
+# coef_rename
+modelsummary(models, coef_rename = c('Volume' = 'Large', 'Height' = 'Tall'))
+
+modelsummary(models, coef_rename = toupper)
+
+modelsummary(models, coef_rename = coef_rename)
+
+# coef_rename = TRUE for variable labels
+datlab &lt;- mtcars
+datlab$cyl &lt;- factor(datlab$cyl)
+attr(datlab$hp, "label") &lt;- "Horsepower"
+attr(datlab$cyl, "label") &lt;- "Cylinders"
+modlab &lt;- lm(mpg ~ hp * drat + cyl, data = datlab)
+modelsummary(modlab, coef_rename = TRUE)
+
+# coef_rename: unnamed vector of length equal to the number of terms in the final table
+m &lt;- lm(hp ~ mpg + factor(cyl), data = mtcars)
+modelsummary(m, coef_omit = -(3:4), coef_rename = c("Cyl 6", "Cyl 8"))
+
+# coef_map
+modelsummary(models, coef_map = c('Volume' = 'Large', 'Height' = 'Tall'))
+
+modelsummary(models, coef_map = c('Volume', 'Height'))
+
+# coef_omit: omit the first and second coefficients
+modelsummary(models, coef_omit = 1:2)
+
+# coef_omit: omit coefficients matching one substring
+modelsummary(models, coef_omit = "ei", gof_omit = ".*")
+
+# coef_omit: omit a specific coefficient
+modelsummary(models, coef_omit = "^Volume$", gof_omit = ".*")
+
+# coef_omit: omit coefficients matching either one of two substring
+#modelsummary(models, coef_omit = "ei|rc", gof_omit = ".*")
+
+# coef_omit: keep coefficients starting with a substring (using a negative lookahead)
+#modelsummary(models, coef_omit = "^(?!Vol)", gof_omit = ".*")
+
+# coef_omit: keep coefficients matching a substring
+modelsummary(models, coef_omit = "^(?!.*ei|.*pt)", gof_omit = ".*")
+
+# shape: multinomial model
+library(nnet)
+multi &lt;- multinom(factor(cyl) ~ mpg + hp, data = mtcars, trace = FALSE) 
+
+# shape: term names and group ids in rows, models in columns
+modelsummary(multi, shape = response ~ model)
+
+# shape: term names and group ids in rows in a single column
+modelsummary(multi, shape = term : response ~ model)
+
+# shape: term names in rows and group ids in columns
+modelsummary(multi, shape = term ~ response:model)
+
+# shape = "rcollapse"
+panels &lt;- list(
+    "Panel A: MPG" = list(
+        "A" = lm(mpg ~ hp, data = mtcars),
+        "B" = lm(mpg ~ hp + factor(gear), data = mtcars)),
+    "Panel B: Displacement" = list(
+        "A" = lm(disp ~ hp, data = mtcars),
+        "C" = lm(disp ~ hp + factor(gear), data = mtcars))
+)
+
+modelsummary(
+    panels,
+    shape = "rbind",
+    gof_map = c("nobs", "r.squared"))
+
+# title
+modelsummary(models, title = 'This is the title')
+
+# title with LaTeX label (for numbering and referencing)
+modelsummary(models, title = 'This is the title \\label{tab:description}')
+
+# add_rows
+rows &lt;- tibble::tribble(~term, ~Bivariate, ~Multivariate,
+  'Empty row', '-', '-',
+  'Another empty row', '?', '?')
+attr(rows, 'position') &lt;- c(1, 3)
+modelsummary(models, add_rows = rows)
+
+# notes
+modelsummary(models, notes = list('A first note', 'A second note'))
+
+# gof_map: tribble
+library(tibble)
+gm &lt;- tribble(
+  ~raw,        ~clean,      ~fmt,
+  "r.squared", "R Squared", 5)
+modelsummary(models, gof_map = gm)
+</pre></div>
+
+
+<h3>References</h3>
+
+<p>Arel-Bundock V (2022). “modelsummary: Data and Model Summaries in R.” <em>Journal of Statistical Software</em>, <em>103</em>(1), 1-23. doi: <a href="https://doi.org/10.18637/jss.v103.i01">10.18637/jss.v103.i01</a>.'
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>modelsummary</em> version 1.4.3 <a href="00Index.html">Index</a>]</div>
+</body></html>

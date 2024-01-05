@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert matrix or dataframe to tabular object.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for as.tabular {tables}"><tr><td>as.tabular {tables}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Convert matrix or dataframe to tabular object.
+</h2>
+
+<h3>Description</h3>
+
+<p>These functions construct or copy labels onto an existing
+matrix or dataframe.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+as.tabular(x, like = NULL)
+## Default S3 method:
+as.tabular(x, like = NULL)
+## S3 method for class 'data.frame'
+as.tabular(x, like = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+
+<p>The object to convert.
+</p>
+</td></tr>
+<tr valign="top"><td><code>like</code></td>
+<td>
+
+<p>If not <code>NULL</code>, should be a tabular object with the
+same number of rows and columns as <code>x</code>.  Its labels
+will be used on the result.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A <code>tabular</code> object.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>as.matrix.tabular</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+model &lt;- tabular( (Species + 1) ~ (n=1) + Sepal.Length + Sepal.Width, data=iris )
+model
+as.tabular(matrix(1:12, 4,3), like=model)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>tables</em> version 0.9.17 <a href="00Index.html">Index</a>]</div>
+</body></html>

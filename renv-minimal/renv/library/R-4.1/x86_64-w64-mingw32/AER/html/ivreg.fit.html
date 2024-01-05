@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Fitting Instrumental-Variable Regressions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for ivreg.fit {AER}"><tr><td>ivreg.fit {AER}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Fitting Instrumental-Variable Regressions</h2>
+
+<h3>Description</h3>
+
+<p>Fit instrumental-variable regression by two-stage least squares. This
+is equivalent to direct instrumental-variables estimation when the number of
+instruments is equal to the number of predictors.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+ivreg.fit(x, y, z, weights, offset, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>regressor matrix.</p>
+</td></tr>
+<tr valign="top"><td><code>y</code></td>
+<td>
+<p>vector with dependet variable.</p>
+</td></tr>
+<tr valign="top"><td><code>z</code></td>
+<td>
+<p>instruments matrix.</p>
+</td></tr>
+<tr valign="top"><td><code>weights</code></td>
+<td>
+<p>an optional vector of weights to be used in the fitting process.</p>
+</td></tr>
+<tr valign="top"><td><code>offset</code></td>
+<td>
+<p>an optional offset that can be used to specify an a priori known
+component to be included during fitting.</p>
+</td></tr>       
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>further arguments passed to <code><a href="../../stats/help/lm.fit.html">lm.fit</a></code> or
+<code>link[stats]{lm.wfit}</code>, respectively.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code><a href="../../AER/help/ivreg.html">ivreg</a></code> is the high-level interface to the work-horse function <code>ivreg.fit</code>,
+a set of standard methods (including <code>summary</code>, <code>vcov</code>, <code>anova</code>,
+<code>hatvalues</code>, <code>predict</code>, <code>terms</code>, <code>model.matrix</code>, <code>bread</code>,
+<code>estfun</code>) is available and described on <code><a href="../../AER/help/summary.ivreg.html">summary.ivreg</a></code>.
+</p>
+<p><code>ivreg.fit</code> is a convenience interface to <code><a href="../../stats/html/lmfit.html">lm.fit</a></code> (or <code><a href="../../stats/html/lmfit.html">lm.wfit</a></code>)
+for first projecting <code>x</code> onto the image of <code>z</code> and the running 
+a regression of <code>y</code> onto the projected <code>x</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>ivreg.fit</code> returns an unclassed list with the following components:
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>coefficients</code></td>
+<td>
+<p>parameter estimates.</p>
+</td></tr>
+<tr valign="top"><td><code>residuals</code></td>
+<td>
+<p>a vector of residuals.</p>
+</td></tr>
+<tr valign="top"><td><code>fitted.values</code></td>
+<td>
+<p>a vector of predicted means.</p>
+</td></tr>
+<tr valign="top"><td><code>weights</code></td>
+<td>
+<p>either the vector of weights used (if any) or <code>NULL</code> (if none).</p>
+</td></tr>
+<tr valign="top"><td><code>offset</code></td>
+<td>
+<p>either the offset used (if any) or <code>NULL</code> (if none).</p>
+</td></tr>
+<tr valign="top"><td><code>estfun</code></td>
+<td>
+<p>a matrix containing the empirical estimating functions.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p>number of observations.</p>
+</td></tr>
+<tr valign="top"><td><code>rank</code></td>
+<td>
+<p>the numeric rank of the fitted linear model.</p>
+</td></tr>
+<tr valign="top"><td><code>df.residual</code></td>
+<td>
+<p>residual degrees of freedom for fitted model.</p>
+</td></tr>
+<tr valign="top"><td><code>cov.unscaled</code></td>
+<td>
+<p>unscaled covariance matrix for the coefficients.</p>
+</td></tr>
+<tr valign="top"><td><code>sigma</code></td>
+<td>
+<p>residual standard error.</p>
+</td></tr>
+<tr valign="top"><td><code>hatvalues</code></td>
+<td>
+<p>regression hat values.</p>
+</td></tr>
+</table>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../AER/help/ivreg.html">ivreg</a></code>, <code><a href="../../stats/help/lm.fit.html">lm.fit</a></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## data
+data("CigarettesSW")
+CigarettesSW$rprice &lt;- with(CigarettesSW, price/cpi)
+CigarettesSW$rincome &lt;- with(CigarettesSW, income/population/cpi)
+CigarettesSW$tdiff &lt;- with(CigarettesSW, (taxs - tax)/cpi)
+
+## high-level interface
+fm &lt;- ivreg(log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + I(tax/cpi),
+  data = CigarettesSW, subset = year == "1995")
+
+## low-level interface
+y &lt;- fm$y
+x &lt;- model.matrix(fm)
+z &lt;- model.matrix(fm, component = "instruments")
+ivreg.fit(x, y, z)$coefficients
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>AER</em> version 1.0-0 <a href="00Index.html">Index</a>]</div>
+</body></html>

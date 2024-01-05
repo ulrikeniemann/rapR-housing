@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Medical Expenditure Panel Survey Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for HealthInsurance {AER}"><tr><td>HealthInsurance {AER}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Medical Expenditure Panel Survey Data</h2>
+
+<h3>Description</h3>
+
+<p>Cross-section data originating from the Medical Expenditure Panel Survey survey conducted in 1996.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>data("HealthInsurance")</pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame containing 8,802 observations on 11 variables.
+</p>
+
+<dl>
+<dt>health</dt><dd><p>factor. Is the self-reported health status &ldquo;healthy&rdquo;?.</p>
+</dd>
+<dt>age</dt><dd><p>age in years.</p>
+</dd>
+<dt>limit</dt><dd><p>factor. Is there any limitation?</p>
+</dd>
+<dt>gender</dt><dd><p>factor indicating gender.</p>
+</dd>
+<dt>insurance</dt><dd><p>factor. Does the individual have a health insurance?</p>
+</dd>
+<dt>married</dt><dd><p>factor. Is the individual married?</p>
+</dd>
+<dt>selfemp</dt><dd><p>factor. Is the individual self-employed?</p>
+</dd>
+<dt>family</dt><dd><p>family size.</p>
+</dd>
+<dt>region</dt><dd><p>factor indicating region.</p>
+</dd>
+<dt>ethnicity</dt><dd><p>factor indicating ethnicity: African-American, Caucasian, other.</p>
+</dd>
+<dt>education</dt><dd><p>factor indicating highest degree attained:
+no degree, GED (high school equivalent), high school, bachelor, master, PhD, other.</p>
+</dd>
+</dl>
+
+
+
+<h3>Details</h3>
+
+<p>This is a subset of the data used in Perry and Rosen (2004).
+</p>
+
+
+<h3>Source</h3>
+
+<p>Online complements to Stock and Watson (2007). 
+</p>
+<p><a href="http://wps.aw.com/aw_stock_ie_2/0,12040,3332253-,00.html">http://wps.aw.com/aw_stock_ie_2/0,12040,3332253-,00.html</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Perry, C. and Rosen, H.S. (2004). &ldquo;The Self-Employed are Less Likely than
+Wage-Earners to Have Health Insurance. So What?&rdquo; in
+Holtz-Eakin, D. and Rosen, H.S. (eds.), <em>Entrepeneurship and
+Public Policy</em>, MIT Press. 
+</p>
+<p>Stock, J.H. and Watson, M.W. (2007). <em>Introduction to Econometrics</em>, 2nd ed. Boston: Addison Wesley.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../AER/help/StockWatson2007.html">StockWatson2007</a></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data("HealthInsurance")
+summary(HealthInsurance)
+prop.table(xtabs(~ selfemp + insurance, data = HealthInsurance), 1)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>AER</em> version 1.0-0 <a href="00Index.html">Index</a>]</div>
+</body></html>

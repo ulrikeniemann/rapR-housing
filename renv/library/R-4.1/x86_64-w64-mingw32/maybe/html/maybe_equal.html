@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Check if two maybe values are equal</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for maybe_equal {maybe}"><tr><td>maybe_equal {maybe}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Check if two maybe values are equal</h2>
+
+<h3>Description</h3>
+
+<p>If both values are 'Nothing' variants or both values are 'Just' variants with
+identical contents <code>TRUE</code> will be returned, otherwise <code>FALSE</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+maybe_equal(.m1, .m2)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>.m1</code></td>
+<td>
+<p>A maybe value</p>
+</td></tr>
+<tr valign="top"><td><code>.m2</code></td>
+<td>
+<p>A maybe value</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>TRUE</code> or <code>FALSE</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+maybe_equal(just(1), just(1))
+maybe_equal(just(1), just(2))
+maybe_equal(nothing(), nothing())
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>maybe</em> version 1.1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

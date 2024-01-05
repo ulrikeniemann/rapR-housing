@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Add a horizontal line to a LaTeX table.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for Hline {tables}"><tr><td>Hline {tables}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Add a horizontal line to a LaTeX table.
+</h2>
+
+<h3>Description</h3>
+
+<p>This function inserts a LaTeX directive to draw a full or partial 
+line in a table.  
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Hline(columns, nearData = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>columns</code></td>
+<td>
+
+<p>Which columns should receive the line?
+</p>
+</td></tr>
+<tr valign="top"><td><code>nearData</code></td>
+<td>
+
+<p>See the Details section of <code><a href="../../tables/help/Heading.html">Heading</a></code>.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>Hline()</code> is not very flexible:  it must be the leftmost header in a row specification
+for the table, i.e. <code>mean * Hline()</code> is not allowed.  Anything to the right of the
+<code>Hline()</code> factor will be ignored.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Produces an expression to insert a label which will be interpreted by LaTeX as a request
+for a horizontal line.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+toLatex( tabular( Species + Hline() + 1 ~ mean*Sepal.Width, data=iris) )
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>tables</em> version 0.9.17 <a href="00Index.html">Index</a>]</div>
+</body></html>

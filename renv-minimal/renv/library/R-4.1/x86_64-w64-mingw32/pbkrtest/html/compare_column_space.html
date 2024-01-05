@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Compare column spaces</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for compare_column_space {pbkrtest}"><tr><td>compare_column_space {pbkrtest}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Compare column spaces</h2>
+
+<h3>Description</h3>
+
+<p>Compare column spaces of two matrices
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+compare_column_space(X1, X2)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>X1, X2</code></td>
+<td>
+<p>matrices with the same number of rows</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+
+<ul>
+<li><p> -1 : Either C(X1)=C(X2), or the spaces are not nested.
+</p>
+</li>
+<li><p> 0 : C(X1) is contained in C(X2)
+</p>
+</li>
+<li><p> 1 : C(X2) is contained in C(X1)
+</p>
+</li></ul>
+
+
+
+<h3>Examples</h3>
+
+<pre>
+
+A1 &lt;- matrix(c(1,1,1,1,2,3), nrow=3)
+A2 &lt;- A1[, 1, drop=FALSE]
+
+compare_column_space(A1, A2)
+compare_column_space(A2, A1)
+compare_column_space(A1, A1)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>pbkrtest</em> version 0.5.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

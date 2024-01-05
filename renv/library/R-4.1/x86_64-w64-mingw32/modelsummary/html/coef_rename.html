@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Rename model terms</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for coef_rename {modelsummary}"><tr><td>coef_rename {modelsummary}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Rename model terms</h2>
+
+<h3>Description</h3>
+
+<p>A convenience function which can be passed to the <code>coef_rename</code> argument of
+the <code>modelsummary</code> function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+coef_rename(
+  x,
+  factor = TRUE,
+  factor_name = TRUE,
+  backticks = TRUE,
+  titlecase = TRUE,
+  underscore = TRUE,
+  asis = TRUE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>character vector of term names to transform</p>
+</td></tr>
+<tr valign="top"><td><code>factor</code></td>
+<td>
+<p>boolean remove the &quot;factor()&quot; label</p>
+</td></tr>
+<tr valign="top"><td><code>factor_name</code></td>
+<td>
+<p>boolean remove the &quot;factor()&quot; label and the name of the
+variable</p>
+</td></tr>
+<tr valign="top"><td><code>backticks</code></td>
+<td>
+<p>boolean remove backticks</p>
+</td></tr>
+<tr valign="top"><td><code>titlecase</code></td>
+<td>
+<p>boolean convert to title case</p>
+</td></tr>
+<tr valign="top"><td><code>underscore</code></td>
+<td>
+<p>boolean replace underscores by spaces</p>
+</td></tr>
+<tr valign="top"><td><code>asis</code></td>
+<td>
+<p>boolean remove the <code>I</code> from as-is formula calls</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>library(modelsummary)
+dat &lt;- mtcars
+dat$horse_power &lt;- dat$hp
+mod &lt;- lm(mpg ~ horse_power + factor(cyl), dat)
+modelsummary(mod, coef_rename = coef_rename)
+</pre></div>
+
+<hr /><div style="text-align: center;">[Package <em>modelsummary</em> version 1.4.3 <a href="00Index.html">Index</a>]</div>
+</body></html>

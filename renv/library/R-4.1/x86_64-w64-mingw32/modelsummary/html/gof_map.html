@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Data.frame used to clean up and format goodness-of-fit...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for gof_map {modelsummary}"><tr><td>gof_map {modelsummary}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Data.frame used to clean up and format goodness-of-fit statistics</h2>
+
+<h3>Description</h3>
+
+<p>By default, this data frame is passed to the 'gof_map' argument of the
+'modelsummary' function. Users can modify this data frame to
+customize the list of statistics to display and their format. See example
+below.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+gof_map
+</pre>
+
+
+<h3>Format</h3>
+
+<p>data.frame with 4 columns of character data: raw, clean, fmt, omit
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (identical(Sys.getenv("pkgdown"),  "true")) {
+
+library(modelsummary)
+mod &lt;- lm(wt ~ drat, data = mtcars)
+gm &lt;- modelsummary::gof_map
+gm$omit[gm$raw == 'deviance'] &lt;- FALSE
+gm$fmt[gm$raw == 'r.squared'] &lt;- "%.5f"
+modelsummary(mod, gof_map = gm)
+}
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>modelsummary</em> version 1.4.3 <a href="00Index.html">Index</a>]</div>
+</body></html>

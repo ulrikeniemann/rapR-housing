@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Set or query options for the table formatting.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for table_options {tables}"><tr><td>table_options {tables}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Set or query options for the table formatting.
+</h2>
+
+<h3>Description</h3>
+
+<p>These functions set or query options for table formatting in LaTeX or HTML output.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+table_options(...)
+booktabs(...)
+htmloptions(head=TRUE, table=TRUE, pad=FALSE, 
+            ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>head</code></td>
+<td>
+<p>logical; enables all of the HTML header options</p>
+</td></tr>
+<tr valign="top"><td><code>table</code></td>
+<td>
+<p>logical; enables output of all parts of the table itself</p>
+</td></tr>
+<tr valign="top"><td><code>pad</code></td>
+<td>
+<p>logical; enables all of the HTML padding options</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>Any of the options listed in the Details below.
+</p>
+</td></tr>  
+</table>
+
+
+<h3>Details</h3>
+
+<p>The <code>table_options()</code> function sets a number of options that control formatting.  Currently the 
+options that affect both LaTeX and HTML output are:
+</p>
+
+<dl>
+<dt><code>justification = "c"</code></dt><dd>
+<p>Default justification for the data columns in the table.
+</p>
+</dd>
+<dt><code>rowlabeljustification = "l"</code></dt><dd>
+<p>Default justification for row labels.
+</p>
+</dd>
+<dt><code>doBegin, doHeader, doBody, doFooter, doEnd</code></dt><dd>
+<p>These logical values (all defaults are <code>TRUE</code>) control the inclusion of specific parts of
+the output table.</p>
+</dd>
+<dt><code>knit_print = TRUE</code></dt><dd>
+<p>Do auto formatting when printing in a <span class="pkg">knitr</span> document.
+</p>
+</dd>
+</dl>
+
+<p>These options are only used for LaTeX output:
+</p>
+
+<dl>
+<dt><code>tabular = "tabular"</code></dt><dd>
+<p>The LaTeX environment to use for the table.  Other choices such as <code>"longtable"</code> might
+make sense.
+</p>
+</dd>
+<dt><code>toprule, midrule, bottomrule</code></dt><dd>
+<p>The LaTeX macros to use for the lines in the table.  By default they are all <code>"\hline"</code>.
+</p>
+</dd>
+<dt><code>titlerule = NULL</code></dt><dd>
+<p>The LaTeX macro to use to underline multicolumn titles.  If <code>NULL</code>, no underlining
+is done.  
+</p>
+</dd>
+<dt><code>latexleftpad, latexrightpad, latexminus, mathmode</code></dt><dd>
+<p>These control formatting of numbers in the table.  If <code>TRUE</code> (the default), blanks
+in <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span>'s formatting are converted to hard spaces in the LaTeX output, and negative
+signs are rendered properly.  Generally this makes output look better, but
+the &lsquo;<span class="file">.tex</span>&rsquo; input may be harder to read.
+</p>
+</dd>
+</dl>
+
+<p>These options are only used for HTML output:
+</p>
+
+<dl>
+<dt><code>doHTMLheader, doCSS, doHTMLbody</code></dt><dd>
+<p>These control output of the material at the top of an HTML page.
+</p>
+</dd>
+<dt><code>HTMLhead, CSS, HTMLbody</code></dt><dd>
+<p>These are the default strings to output when the corresponding element is selected.
+If present, the string <code>"CHARSET"</code> will be replaced with the result of
+<code><a href="../../utils/html/localeToCharset.html">localeToCharset</a>()</code> in the <code>HTMLhead</code>.  The string
+<code>"#ID"</code> will be replaced with <code>"#"</code> followed by the <code>id</code>
+argument to <code><a href="../../tables/help/html.tabular.html">html.tabular</a></code> (or removed if that is blank).
+</p>
+</dd>
+<dt><code>HTMLcaption</code></dt><dd>
+<p>This is an optional HTML caption for the table.  If <code>NULL</code>, no
+caption is emitted.
+</p>
+</dd>
+<dt><code>HTMLleftpad, HTMLrightpad, HTMLminus</code></dt><dd>
+<p>These control formatting of numbers in the table.  If <code>TRUE</code>, blanks
+in <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span>'s formatting are converted to hard spaces in the HTML output, and negative
+signs are rendered properly.  Generally this makes output look better, but 
+cut and paste from the table may include these special characters
+and not be recognized by other software.  The default is <code>FALSE</code>.
+</p>
+</dd>
+<dt><code>HTMLattributes</code></dt><dd>
+<p>This is a string to add to the <code>"&lt;table&gt;"</code> declaration at the top of the table.  By
+default, the attributes are <code>'frame="hsides" rules="groups"'</code>.
+These set horizontal rules on the top and bottom of the table and between the header,
+body, and footer (if present).
+</p>
+</dd>
+<dt><code>HTMLfooter</code></dt><dd>
+<p>This is <code>NULL</code> for no footer, or HTML code to insert in the table.  Note
+that in HTML the footer should be specified before the body of the table;
+<code><a href="../../tables/help/html.tabular.html">html.tabular</a></code> will do this if both are written in the same call.
+</p>
+</dd>
+</dl>
+
+<p>These may be set persistently by calling <code>table_options()</code>, or just for the duration
+of the call by passing them in a list via <code>latex(options=list( ... ))</code>.  Additional 
+<code>...</code> arguments to <code>latex</code> are passed to <code><a href="../../base/html/format.html">format</a></code>.
+</p>
+<p>The <code>booktabs()</code> function sets the <code>table_options()</code> values to different defaults, 
+suitable for use with the <span class="pkg">booktabs</span> LaTeX package.
+</p>
+<p>The <code>htmloptions()</code> function constructs a list suitable for the <code>options</code>
+argument to <code><a href="../../tables/help/html.tabular.html">html.tabular</a></code>, with grouping of options that
+rarely differ from each other.
+</p>
+<p>Note that any LaTeX code can be used in the rule options; for example, see
+the <code>longtable</code> example in the vignette.  Material to go above the headers
+goes into <code>toprule</code>, material between the headers and the body goes into <code>midrule</code>,
+and material at the bottom of the table goes into <code>bottomrule</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>table_options()</code> and <code>booktabs()</code> return the previous settings.
+</p>
+<p><code>htmloptions()</code> returns a list of settings without changing the defaults.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../tables/help/latex.tabular.html">latex.tabular</a></code>,  <code><a href="../../tables/help/html.tabular.html">html.tabular</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tab &lt;- tabular( (Species + 1) ~ (n=1) + Format(digits=2)*
+         (Sepal.Length + Sepal.Width)*(mean + sd), data=iris )
+toLatex(tab)
+save &lt;- booktabs()
+toLatex(tab)
+table_options(save)
+
+
+f &lt;- tempfile(fileext = ".html")
+if (interactive())
+  toHTML(tab, f, 
+    options=htmloptions(HTMLcaption="Table of Iris Data",
+                      pad = TRUE))
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>tables</em> version 0.9.17 <a href="00Index.html">Index</a>]</div>
+</body></html>

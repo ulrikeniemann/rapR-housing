@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Display a tabular object using HTML.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for html.tabular {tables}"><tr><td>html.tabular {tables}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Display a tabular object using HTML.
+</h2>
+
+<h3>Description</h3>
+
+<p>This is similar to <code><a href="../../tables/help/print.tabular.html">print.tabular</a></code>, but it inserts the code to
+display the table in an HTML table.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+toHTML(object, file = "", options = NULL, 
+                       id = NULL, append = FALSE, 
+                       browsable = TRUE, ...)
+html.tabular(object, ...)
+writeCSS(CSS = htmloptions()$CSS, id = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+
+<p>The tabular object.
+</p>
+</td></tr>
+<tr valign="top"><td><code>file</code></td>
+<td>
+
+<p>A filename or connection to which to write the HTML code, or
+<code>""</code> to write to the console.
+</p>
+</td></tr>
+<tr valign="top"><td><code>options</code></td>
+<td>
+
+<p>A list of options to set for the duration of the call.
+</p>
+</td></tr>
+<tr valign="top"><td><code>id</code></td>
+<td>
+
+<p>A unique identifier to set for this table and the associated
+CSS style, or <code>NULL</code>, for no id.
+</p>
+</td></tr>
+<tr valign="top"><td><code>append</code></td>
+<td>
+
+<p>If <code>TRUE</code>, opens <code>file</code> for appending (if it is
+a filename rather than a connection).
+</p>
+</td></tr>
+<tr valign="top"><td><code>browsable</code></td>
+<td>
+
+<p>Should the output be marked as browsable?  
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>Settings for default formatting.  See Details below.
+</p>
+</td></tr>  
+<tr valign="top"><td><code>CSS</code></td>
+<td>
+
+<p>A character vector to use as CSS.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The <code>toHTML()</code> function produces HTML output suitable for inclusion in an HTML page.
+</p>
+<p>The <code>html.tabular</code> function is set up
+to work as a method for the <code>html</code> generic in <span class="pkg">Hmisc</span>,
+but is not registered as a method, so that <span class="pkg">tables</span> can
+work when <span class="pkg">Hmisc</span> is not installed.
+</p>
+<p>In HTML, it is mainly the CSS style sheet that determines the look of the table.  
+When formatting a table, <code>html.tabular</code> sets the CSS class according to the
+table's <code>Justify</code> setting; justifications of <code>c("l", "c", "r")</code> are
+translated to classes <code>c("left", "center", "right")</code> respectively; other strings
+will be passed through and used directly as class names.  
+If the <code>id</code> value is not <code>NULL</code>, then it will be used
+as the CSS id selector when searching for a style.
+See <code><a href="../../tables/help/table_options.html">table_options</a></code> for a number of options that control formatting, including
+the default style sheet.
+</p>
+
+
+<h3>Value</h3>
+
+<p>If <code>file = ""</code> (the default), the <code>toHTML()</code>
+function creates an HTML object using the
+<code>htmltools::HTML</code> function and returns it. 
+If <code>file</code> is a character value or a connection, the results are written there and the HTML object is returned
+invisibly.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../tables/help/print.tabular.html">print.tabular</a></code>, <code><a href="../../tables/help/toLatex.tabular.html">toLatex.tabular</a></code>, <code><a href="../../Hmisc/help/html.html">html</a></code>, <code><a href="../../tables/help/htmloptions.html">htmloptions</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+X &lt;- rnorm(125, sd=100)
+Group &lt;- factor(sample(letters[1:5], 125, rep=TRUE))
+
+tab &lt;- tabular( Group ~ (N=1)+Format(digits=2)*X*((Mean=mean) + Heading("Std Dev")*sd) )
+
+save &lt;- table_options()
+table_options(rowlabeljustification="c")
+
+f &lt;- tempfile(fileext=".html")
+con &lt;- file(f, "wt")
+
+if (interactive())
+  toHTML(tab, con, options=htmloptions(head=TRUE, table=FALSE))
+
+writeLines("&lt;p&gt;This table has pad = FALSE.  The centered numbers look
+sloppy.&lt;br&gt;", con)
+
+if (interactive())
+  toHTML(tab, con, options=htmloptions(head=FALSE, table=TRUE, pad=FALSE))
+
+writeLines("&lt;p&gt;This table has pad = FALSE and justification=\"r\".
+The justification makes the columns of numbers look all right (except
+for the hyphens used as minus signs), but they are placed poorly
+relative to the labels.&lt;br&gt;", con)
+
+if (interactive())
+  toHTML(tab, con, options=htmloptions(head=FALSE, table=TRUE, pad=FALSE, justification="r"))
+
+writeLines("&lt;p&gt;This one has pad = TRUE. It looks best, but if you cut
+and paste, the spacing characters may cause problems.&lt;br&gt;", con)
+
+if (interactive())
+  toHTML(tab, con, options=htmloptions(head=FALSE, table=TRUE, pad=TRUE))
+
+table_options(save)
+close(con)
+if (interactive())
+  browseURL(f)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>tables</em> version 0.9.17 <a href="00Index.html">Index</a>]</div>
+</body></html>

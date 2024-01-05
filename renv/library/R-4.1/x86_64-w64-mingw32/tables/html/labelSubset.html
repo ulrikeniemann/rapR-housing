@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Add a label to a logical vector.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for labelSubset {tables}"><tr><td>labelSubset {tables}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Add a label to a logical vector.
+</h2>
+
+<h3>Description</h3>
+
+<p>This function is mainly for internal use.  It adds a label to 
+a logical vector, so that the <code><a href="../../tables/help/Percent.html">Percent</a></code> pseudo-function
+can ignore it when forming a denominator.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+labelSubset(subset, label)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>subset</code></td>
+<td>
+
+<p>A logical vector describing a subset of the dataset.
+</p>
+</td></tr>
+<tr valign="top"><td><code>label</code></td>
+<td>
+
+<p>A character label to use to describe this subset in a call
+to <code>Equal</code> or <code>Unequal</code> within <code><a href="../../tables/help/Percent.html">Percent</a></code>.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A vector of class <code>"labelledSubset"</code> with the label 
+recorded as an attribute.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Duncan Murdoch
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../tables/help/Percent.html">Percent</a></code>
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>tables</em> version 0.9.17 <a href="00Index.html">Index</a>]</div>
+</body></html>

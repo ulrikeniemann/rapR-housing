@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: 'Heading' pseudo-function</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for Heading {tables}"><tr><td>Heading {tables}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+<code>Heading</code> pseudo-function
+</h2>
+
+<h3>Description</h3>
+
+<p>The <code>Heading</code> pseudo-function normally overrides the automatic
+heading on the following items in a table.  Setting 
+<code>override=FALSE</code> is used in automatically 
+generated expressions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Heading(name = NULL, override = TRUE, character.only = FALSE, nearData = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>name</code></td>
+<td>
+
+<p>A legal R variable name, or a character constant.
+</p>
+</td></tr>
+<tr valign="top"><td><code>override</code></td>
+<td>
+
+<p>Whether this heading should override one that is already present.
+</p>
+</td></tr>
+<tr valign="top"><td><code>character.only</code></td>
+<td>
+
+<p>If <code>TRUE</code>, the <code>name</code> argument will be interpreted
+as an expression evaluating to a character value.
+</p>
+</td></tr>
+<tr valign="top"><td><code>nearData</code></td>
+<td>
+
+<p>See Details below.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This replaces the automatic heading or row label on the following item
+with the <code>name</code> or string as specified.  If no argument
+is given, the heading or label is suppressed.  
+</p>
+<p>An alternative form of <code>Heading(name)</code> is <code>(name=...)</code>, where
+<code>...</code> is an expression to be displayed in the table.
+</p>
+<p>If <code>override = FALSE</code>, the label is only supplied if there is no other label.
+This is used in the code for <code><a href="../../tables/help/Factor.html">Factor</a></code>.
+</p>
+<p>The <code>nearData</code> argument is rarely used.  It
+affects the situation where <code>"+"</code> is used to
+join tables with different numbers of labels.  
+If <code>nearData = TRUE</code> (the default), the shorter
+list of labels are pushed close to the data, i.e.
+to the right side for row labels, the bottom for
+column labels.  If <code>FALSE</code>, they are pushed
+to the opposite side.
+</p>
+
+
+<h3>Pseudo-functions</h3>
+
+<p>This is a &ldquo;pseudo-function&rdquo;:  it takes the form of a function call, but is
+never actually called:  it is 
+handled specially by <code><a href="../../tables/help/tabular.html">tabular</a></code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+tabular( (Sepal.Length+Sepal.Width) ~ 
+         (Heading(Mean)*mean + (S.D.=sd)), data=iris )
+
+heading &lt;- "Variable Heading"
+tabular( (Sepal.Length+Sepal.Width) ~ 
+         (Heading(heading, character.only = TRUE)*mean + (S.D.=sd)), 
+         data=iris )
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>tables</em> version 0.9.17 <a href="00Index.html">Index</a>]</div>
+</body></html>
