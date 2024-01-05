@@ -1,0 +1,32 @@
+---
+output: pdf_document
+---
+
+In this example we embed parts of the examples from the
+\texttt{kruskal.test} help page into a LaTeX document:
+
+```{r}
+data (airquality)
+kruskal.test(Ozone ~ Month, data = airquality)
+```
+
+
+which shows that the location parameter of the Ozone
+distribution varies significantly from month to month.
+Finally we include a boxplot of the data:
+
+```{r, echo = FALSE}
+boxplot(Ozone ~ Month, data = airquality)
+```
+
+it is possible to run a bash command by adding this chunk to the source:
+
+(bash’s pwd command shows the current working directory)
+
+(see chapter_7.R for bash installation and add path)
+
+```{bash}
+pwd
+```
+
+

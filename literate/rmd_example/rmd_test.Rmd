@@ -1,0 +1,16 @@
+---
+output: html_document
+---
+
+# Document title
+
+## Section title
+
+### Subsection title
+
+This is **bold** text. This is *text in italics*.
+
+My favourite programming language for statistics is ~~SAS~~ R.
+
+<!-- running the following command in the R console -->
+<!-- rmarkdown::render("./literate/rmd_example/rmd_test.rmd") -->
